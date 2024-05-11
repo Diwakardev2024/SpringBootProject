@@ -1,7 +1,9 @@
 package com.nextgenvision.ui.controller;
 
+import org.hibernate.sql.exec.ExecutionException;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,8 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nexgenvision.service.UserService;
 import com.nexgenvision.ui.model.request.UserDetailsRequestModel;
+import com.nexgenvision.ui.model.response.ErrorMessages;
 import com.nexgenvision.ui.model.response.UserRest;
 import com.nexgenvision.ui.model.shared.dto.UserDto;
+
+import jakarta.persistence.Id;
 
 @RestController
 @RequestMapping(value="users") // http://localhost:8080/users
@@ -23,20 +28,23 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping(path="/{id}")
-	public String getUser(@PathVariable String id) {
+	@GetMapping(path="/{id}",produces= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
+	public UserRest getUser(@PathVariable String id) {
 		
 		UserRest returnValue=new UserRest();
+		
 		UserDto userDto=userService.getUserByUserId(id);
 		BeanUtils.copyProperties(userDto, returnValue);
 		
-		return "get user was called";
+		return returnValue;
 	}
 	
-	@PostMapping
-	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) {
+	@PostMapping(consumes= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE},produces= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
+	public UserRest createUser(@RequestBody UserDetailsRequestModel userDetails) throws Exception
+	{
 		 
 		UserRest returnValue=new UserRest();
+		if(userDetails.getFirstName().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 		UserDto userDto=new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);
 		

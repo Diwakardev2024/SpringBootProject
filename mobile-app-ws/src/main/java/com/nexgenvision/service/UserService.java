@@ -1,7 +1,5 @@
 package com.nexgenvision.service;
 
-import org.springframework.stereotype.Service;
-
 import com.nexgenvision.ui.model.shared.dto.UserDto;
 
 public interface UserService {
