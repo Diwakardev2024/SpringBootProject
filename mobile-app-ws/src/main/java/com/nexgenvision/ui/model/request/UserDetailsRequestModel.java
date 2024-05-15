@@ -1,11 +1,19 @@
 package com.nexgenvision.ui.model.request;
 
+import java.util.List;
+
+import com.nexgenvision.ui.model.shared.dto.AddressDTO;
+
+import jakarta.validation.constraints.NotNull;
+
 public class UserDetailsRequestModel {
-	
+	@NotNull(message = "firstName can not be null")
 	private String firstName;
 	private String lastName;
 	private String email;
 	private String password;
+	private List<AddressDTO> addresses;
+	
 	
 	public String getFirstName() {
 		return firstName;
@@ -30,6 +38,12 @@ public class UserDetailsRequestModel {
 	}
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	public List<AddressDTO> getAddresses() {
+		return addresses;
+	}
+	public void setAddresses(List<AddressDTO> addresses) {
+		this.addresses = addresses;
 	}
 	
 	

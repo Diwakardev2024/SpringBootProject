@@ -1,37 +1,46 @@
 package com.nexgenvision.io.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.Data;
 
-@Entity(name="users")
+@Entity(name = "users")
 public class UserEntity implements Serializable {
 
-	
 	private static final long serialVersionUID = 4156446106636428294L;
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String userId;
-	
-	@Column(nullable=false,length=50)
+
+	@Column(nullable = false, length = 50)
 	private String firstName;
-	
-	@Column(nullable=false,length=50)
+
+	@Column(nullable = false, length = 50)
 	private String lastName;
-	
-	@Column(nullable=false,length=120)
+
+	@Column(nullable = false, length = 120)
 	private String email;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String encryptedPassword;
+
+	@Column(nullable = false)
+	private Boolean emailVerifiationStatus = false;
 	
+	@OneToMany(mappedBy="userDetails",cascade=CascadeType.ALL)
+	private List<AddressEntity> addresses;
+
 	public long getId() {
 		return id;
 	}
@@ -80,14 +89,6 @@ public class UserEntity implements Serializable {
 		this.encryptedPassword = encryptedPassword;
 	}
 
-	public String getEmailVerificationToken() {
-		return emailVerificationToken;
-	}
-
-	public void setEmailVerificationToken(String emailVerificationToken) {
-		this.emailVerificationToken = emailVerificationToken;
-	}
-
 	public Boolean getEmailVerifiationStatus() {
 		return emailVerifiationStatus;
 	}
@@ -96,10 +97,13 @@ public class UserEntity implements Serializable {
 		this.emailVerifiationStatus = emailVerifiationStatus;
 	}
 
-	private String emailVerificationToken;
-	
-	@Column(nullable=false)
-	private Boolean emailVerifiationStatus=false;
-	
+	public List<AddressEntity> getAddresses() {
+		return addresses;
+	}
 
+	public void setAddresses(List<AddressEntity> addresses) {
+		this.addresses = addresses;
+	}
+	
+	
 }
