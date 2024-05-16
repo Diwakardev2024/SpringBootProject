@@ -30,7 +30,7 @@ public class UserServiceimpl implements UserService {
 	Utils utils;
 
 	@Override
-	public UserDto createdUser(UserDto user) {
+	public UserDto createUser(UserDto user) {
 
 		if (userRepository.findByEmail(user.getEmail()) != null) {
 			throw new RuntimeException("Records already Exits ");
@@ -40,7 +40,7 @@ public class UserServiceimpl implements UserService {
 			
 			AddressDTO address=user.getAddresses().get(i);
 			address.setUserDetails(user);
-			address.setAddressId(utils.generatedAddressString(30));
+			address.setAddressId(utils.generatedAddressId(30));
 			user.getAddresses().set(i, address);
 		}
 
@@ -55,10 +55,12 @@ public class UserServiceimpl implements UserService {
 		String publicUserId = utils.generatedUserId(30);
 		userEntity.setUserId(publicUserId);
 		userEntity.setEncryptedPassword("123");
+		
 		UserEntity storedUserDetails = userRepository.save(userEntity);
 
 		UserDto returnValue = new UserDto();
-		BeanUtils.copyProperties(storedUserDetails, returnValue);
+//		BeanUtils.copyProperties(storedUserDetails, returnValue);
+		returnValue=modelMapper.map(storedUserDetails, UserDto.class);
 
 		return returnValue;
 	}
@@ -71,6 +73,7 @@ public class UserServiceimpl implements UserService {
 		if(userEntity==null) throw new RuntimeException("email not found");
 		
 		BeanUtils.copyProperties(userEntity, returnValue);
+		
 		return returnValue;
 		
 	}

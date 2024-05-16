@@ -6,7 +6,7 @@ import com.nexgenvision.ui.model.shared.dto.UserDto;
 
 public interface UserService {
 
-	UserDto createdUser(UserDto user);
+	UserDto createUser(UserDto user);
 	UserDto getUser(String email);
 	UserDto getUserByUserId(String userId);
 	UserDto updateUser(String userId,UserDto user);

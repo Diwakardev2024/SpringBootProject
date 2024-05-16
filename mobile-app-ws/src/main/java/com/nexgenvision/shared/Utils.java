@@ -16,7 +16,7 @@ public class Utils {
 		return generatedRandomString(length);
 	}
 	
-	public String generatedAddressString(int length) {
+	public String generatedAddressId(int length) {
 		
 		return generatedRandomString(length);
 		
