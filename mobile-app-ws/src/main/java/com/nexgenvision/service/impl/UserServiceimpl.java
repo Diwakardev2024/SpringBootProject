@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +49,8 @@ public class UserServiceimpl implements UserService {
 		UserEntity userEntity = new UserEntity();
 //		BeanUtils.copyProperties(user, userEntity);
 		ModelMapper modelMapper=new ModelMapper();
+		modelMapper.getConfiguration()
+        .setMatchingStrategy(MatchingStrategies.LOOSE);
 		modelMapper.map(user, UserEntity.class) ;
 		
 		

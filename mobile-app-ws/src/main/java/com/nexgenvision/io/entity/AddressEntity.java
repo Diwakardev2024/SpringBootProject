@@ -10,7 +10,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Data;
 
+@Data
 @Entity(name="addresses")
 public class AddressEntity implements Serializable {
 
@@ -41,70 +43,5 @@ public class AddressEntity implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="users_id")
 	private UserEntity userDetails;
-	
-	public long getId() {
-		
-		return id;
-	}
-
-	public String getAddressId() {
-		return addressId;
-	}
-
-	public void setAddressId(String addressId) {
-		this.addressId = addressId;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getStreetName() {
-		return streetName;
-	}
-
-	public void setStreetName(String streetName) {
-		this.streetName = streetName;
-	}
-
-	public String getPostalcode() {
-		return postalcode;
-	}
-
-	public void setPostalcode(String postalcode) {
-		this.postalcode = postalcode;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public UserEntity getUserDetails() {
-		return userDetails;
-	}
-
-	public void setUserDetails(UserEntity userDetails) {
-		this.userDetails = userDetails;
-	}
-
-	public void setId(long id) {
-		this.id = id;
-	}
 
 }

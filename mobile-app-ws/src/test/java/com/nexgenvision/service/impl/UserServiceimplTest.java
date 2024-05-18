@@ -55,7 +55,7 @@ class UserServiceimplTest {
 		userEntity.setEmail("test@test.com");
 		userEntity.setUserId("8e4prNGRnlEIOayRfl3I4Ye14TbG2I");
 		userEntity.setEncryptedPassword("test");
-		userEntity.setAddresses(getAddressesEntity());
+//		userEntity.setAddresses(getAddressesEntity());
 
 	}
 
