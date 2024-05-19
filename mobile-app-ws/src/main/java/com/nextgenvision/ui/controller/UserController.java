@@ -39,7 +39,6 @@ import jakarta.validation.Valid;
 @RequestMapping(value="users") // http://localhost:8080/users
 public class UserController {
 
-	public 	ModelMapper modelMapper;
 	private static final Logger logger=LogManager.getLogger(UserController.class);
 	
 	@Autowired
@@ -50,6 +49,9 @@ public class UserController {
 	
 	@Autowired
 	AddressService addressesService;
+	
+	@Autowired
+	ModelMapper modelMapper;
 	
 	@GetMapping(path="/{id}",produces= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
 	public UserRest getUser(@PathVariable String id) {
@@ -77,7 +79,6 @@ public class UserController {
 		
 //		UserDto userDto=new UserDto();
 //		BeanUtils.copyProperties(userDetails, userDto);
-		ModelMapper modelMapper=new ModelMapper();
 		UserDto userDto=modelMapper.map(userDetails,UserDto.class);
 		
 		
@@ -149,7 +150,7 @@ public class UserController {
 		java.lang.reflect.Type listType=new TypeToken<List<AddressesRest>>() {}.getType();
 		
 		
-		 returnValue=new ModelMapper().map(addressesDTO,listType);
+		 returnValue=modelMapper.map(addressesDTO,listType);
 		
 		}
 		
@@ -166,7 +167,7 @@ public class UserController {
 		AddressDTO addressesDto=addresseService.getAddress(addressId);
 		
 		logger.info("Request successfull");
-		return new ModelMapper().map(addressesDto, AddressesRest.class);
+		return modelMapper.map(addressesDto, AddressesRest.class);
 		
 		
 		

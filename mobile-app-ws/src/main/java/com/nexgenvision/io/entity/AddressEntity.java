@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import com.nexgenvision.ui.model.shared.dto.UserDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
