@@ -17,3 +17,4 @@ public class UserDetailsRequestModel {
 	private List<AddressDTO> addresses;
 	
 }
+ 

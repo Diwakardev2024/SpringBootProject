@@ -51,11 +51,12 @@ class UserServiceimplTest {
 		userEntity = new UserEntity();
 		userEntity.setId(1L);
 		userEntity.setFirstName("Sergey");
+		userEntity.setLastName("kargopolov");
 		userEntity.setUserId("userId");
 		userEntity.setEmail("test@test.com");
 		userEntity.setUserId("8e4prNGRnlEIOayRfl3I4Ye14TbG2I");
 		userEntity.setEncryptedPassword("test");
-//		userEntity.setAddresses(getAddressesEntity());
+		userEntity.setAddresses(getAddressesEntity());
 
 	}
 
@@ -127,34 +128,23 @@ class UserServiceimplTest {
 		when(utils.generatedAddressId(anyInt())).thenReturn("hgfngir884asda");
 		when(utils.generatedUserId(anyInt())).thenReturn(userId);
 		userEntity.setEncryptedPassword("123");
+		when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 //		Mockito.doNothing().when(amazonSES).verifyEmail(any(UserDto.class));
 
-		AddressDTO addressDto = new AddressDTO();
-		addressDto.setType("shipping");
-		addressDto.setCity("Vancouver");
-		addressDto.setCountry("Canada");
-		addressDto.setPostalCode("ABC123");
-		addressDto.setStreetName("123 Street name");
-
-		AddressDTO billingAddressDto = new AddressDTO();
-		billingAddressDto.setType("billing");
-		billingAddressDto.setCity("Vancouver");
-		billingAddressDto.setCountry("Canada");
-		billingAddressDto.setPostalCode("ABC123");
-		billingAddressDto.setStreetName("123 Street name");
-
-		List<AddressDTO> addresses = new ArrayList<>();
-		addresses.add(addressDto);
-//		addresses.add(billingAddressDto);
-
-		UserDto userDto = new UserDto();
-		userDto.setAddresses(addresses);
 		
-
+		UserDto userDto = new UserDto();
+		userDto.setAddresses(getAddressesDto());
+		userDto.setFirstName("Sergey");
+		userDto.setLastName("kargopolov");
+		userDto.setPassword("1234568");
+		userDto.setEmail("test@test.com");
+		
+		
+		
 		UserDto storedUserDetails = userService.createUser(userDto);
 		assertNotNull(storedUserDetails);
 		assertEquals(userEntity.getFirstName(), storedUserDetails.getFirstName());
-		assertEquals(userEntity.getFirstName(), storedUserDetails.getLastName());
+		assertEquals(userEntity.getLastName(), storedUserDetails.getLastName());
 		assertNotNull(storedUserDetails.getUserId());
 		assertEquals(storedUserDetails.getAddresses().size(), userEntity.getAddresses().size());
 		verify(utils, times(2)).generatedAddressId(30);

@@ -61,7 +61,7 @@ public class UserController {
 		UserRest returnValue=new UserRest();
 		
 		UserDto userDto=userService.getUserByUserId(id);
-		BeanUtils.copyProperties(userDto, returnValue);
+		returnValue = modelMapper.map(userDto, UserRest.class);
 		logger.info("Request successfull");
 		return returnValue;
 	}
@@ -83,6 +83,7 @@ public class UserController {
 		
 		
 		UserDto createdUser=userService.createUser(userDto);
+		createdUser.setUserId("dfasd");
 		returnValue =modelMapper.map(createdUser,UserRest.class);		
 		return returnValue;
 		
@@ -90,10 +91,10 @@ public class UserController {
 	}
 	
 	@PutMapping(path="/{id}",consumes= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE},produces= {MediaType.APPLICATION_XML_VALUE,MediaType.APPLICATION_JSON_VALUE})
-	public UserRest updateUser(@PathVariable String id,@RequestBody UserDetailsRequestModel userDetails) {
+	public UserRest updateUser(@PathVariable String id,@RequestBody UserDetailsRequestModel userDetails) throws Exception {
 		
 		UserRest returnValue=new UserRest();
-//		if(userDetails.getFirstName().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
+		if(userDetails.getFirstName().isEmpty()) throw new Exception(ErrorMessages.MISSING_REQUIRED_FIELD.getErrorMessage());
 //		if(userDetails.getFirstName().isEmpty()) throw new NullPointerException("This object is null");
 		UserDto userDto=new UserDto();
 		BeanUtils.copyProperties(userDetails, userDto);

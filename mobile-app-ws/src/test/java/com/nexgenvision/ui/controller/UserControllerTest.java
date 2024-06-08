@@ -1,6 +1,7 @@
 package com.nexgenvision.ui.controller;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -9,9 +10,15 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.junit.MockitoJUnitRunner;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.nexgenvision.io.entity.UserEntity;
 import com.nexgenvision.service.UserService;
@@ -20,6 +27,7 @@ import com.nexgenvision.ui.model.response.UserRest;
 import com.nexgenvision.ui.model.shared.dto.AddressDTO;
 import com.nexgenvision.ui.model.shared.dto.UserDto;
 import com.nextgenvision.ui.controller.UserController;
+import com.nexgenvision.ui.model.request.*;
 
 class UserControllerTest {
 
@@ -30,8 +38,11 @@ class UserControllerTest {
 	@Mock
 	UserServiceimpl userService;
 	
+	@Mock
+    private ModelMapper modelMapper;
 	
 	UserDto userDto;
+	
 	
 	final String USER_ID="8e4prNGRnlEIOayRfl3I4Ye14TbG2I";
 	
@@ -64,6 +75,19 @@ class UserControllerTest {
 		assertEquals(userDto.getLastName(),userRest.getLastName());
 		assertTrue(userDto.getAddresses().size()==userRest.getAddresses().size());
 	
+	}
+	
+	@Test
+	final void testCreateUser() throws Exception {
+		UserDetailsRequestModel req = new UserDetailsRequestModel();
+		req.setFirstName("Sergey");
+		
+		when(userService.createUser(any())).thenReturn(userDto);
+		UserRest rest = userController.createUser(req);
+		assertNotNull(rest);
+		assertNotNull(rest.getUserId());
+		assertEquals(userDto.getUserId(), rest.getUserId());
+		
 	}
 	
 	private List<AddressDTO> getAddressesDto() {

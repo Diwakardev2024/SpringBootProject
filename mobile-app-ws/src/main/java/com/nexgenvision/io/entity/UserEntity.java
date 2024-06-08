@@ -14,11 +14,13 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 @Data
 @Entity
 @Table(name = "users")
 @NoArgsConstructor
+//@RequiredArgsConstructor 
 public class UserEntity implements Serializable {
 
 	private static final long serialVersionUID = 4156446106636428294L;

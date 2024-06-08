@@ -42,7 +42,10 @@ public interface UserRepository extends JpaRepository<UserEntity, Long> {
 	@Transactional
 	@Modifying
 	@Query(value="update users u set u.EMAIL_VERIFICATION_STATUS=:emailVerificationStatus where u.user_id=:userId",nativeQuery=true)
-	void updateUserEmailVerificationStatus(@Param("emailVerificationStatus") boolean emailVerificationStatus ,@Param("userId" )String userId);
+	void updateUserEmailVerificationStatus(
+			@Param("emailVerificationStatus") boolean emailVerificationStatus ,
+			@Param("userId" )String userId
+			);
 	
 	// JQL Query
 	
